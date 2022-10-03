@@ -1,6 +1,7 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+// Array for Special Characters
 var specialCharacters = [
   '!',
   '@',
@@ -27,6 +28,7 @@ var specialCharacters = [
   '}',
 ];
 
+// Array for Numbers
 var numberCharacters = [
   '0',
   '1',
@@ -41,6 +43,7 @@ var numberCharacters = [
   '0',
 ];
 
+// array for lower case characters
 var lowerCasedCharacters = [
   'a',
   'b',
@@ -70,6 +73,7 @@ var lowerCasedCharacters = [
   'z',
 ];
 
+// array for uppercase characters
 var upperCasedCharacters = [
   'A',
   'B',
@@ -113,37 +117,45 @@ function askPassOptions() {
   var length = parseInt(prompt('How many characters would your password to be?')
   );
 
+  // check for number
   if (Number.isNaN(length)) {
     alert('Please enter a number.');
     return null;
   }
   
+  // check for length
   if (length < 8) {
     alert('Password length is too short.');
     return null;
   }
 
+  // check for length part 2
   if (length > 128) {
     alert('Password length is too long.');
     return null;
   }
 
+  //confirms for special characters
   var hasSpecialCharacters = confirm(
     'Click OK to confirm for special characters'
   );
 
+  //confirms for numbers
   var hasNumericCharacters = confirm(
     'Click OK to confirm for numbers'
   );
 
+  //confirms for lowercase characters
   var hasLowerCasedCharacters = confirm(
     'Click OK to confirm for lowercase characters'
   );
 
+  //confirms for uppercase characters
   var hasUpperCasedCharacters = confirm(
     'Click OK to confirm for uppercase characters'
   );
 
+  // check for user character picks
   if (
     hasSpecialCharacters === false && hasNumericCharacters === false &&
     hasLowerCasedCharacters === false &&
@@ -153,6 +165,7 @@ function askPassOptions() {
     return null;
   }
 
+  //check for options
   var passOptions = {
     length: length,
     specialChars: hasSpecialCharacters,
@@ -164,52 +177,66 @@ function askPassOptions() {
   return passOptions;
 }
 
+// This Function generates the password based on user specifics
 function generatePassword() {
+  //takes in password options
   var options = askPassOptions();
 
+  //result is final password
   var result = [];
 
+  //possible characters
   var allPossibleChars = [];
 
-  var finalPass = [];
+  //guaranteed characters
+  var finPass = [];
 
+  //check for options
   if(!options){
     return null;
   };
 
+  //checks special chars and adds them for possible chars and guaranteed char arrays
   if(options.specialChars) {
     allPossibleChars = allPossibleChars.concat(specialCharacters);
-    finalPass.push(getRandom(specialCharacters));
+    finPass.push(getRandom(specialCharacters));
   }
 
+  //checks numbers and adds them for possible chars and guaranteed char arrays
   if(options.numbers) {
     allPossibleChars = allPossibleChars.concat(numberCharacters);
-    finalPass.push(getRandom(numberCharacters));
+    finPass.push(getRandom(numberCharacters));
   }
 
+  //checks lowercase chars and adds them for possible chars and guaranteed char arrays
   if(options.lowercase) {
     allPossibleChars = allPossibleChars.concat(lowerCasedCharacters);
-    finalPass.push(getRandom(lowerCasedCharacters));
+    finPass.push(getRandom(lowerCasedCharacters));
   }
 
+  //checks uppercase chars and adds them for possible chars and guaranteed char arrays
   if(options.uppercase) {
     allPossibleChars = allPossibleChars.concat(upperCasedCharacters);
-    finalPass.push(getRandom(upperCasedCharacters));
+    finPass.push(getRandom(upperCasedCharacters));
   }
 
+  //adds possible chars to result
   for (var i = 0;i < options.length;i++) {
     var passChars = getRandom(allPossibleChars);
 
     result.push(passChars);
   }
 
-  for ( var i = 0;i < finalPass.length;i++) {
-    result[i] = finalPass[i];
+  //adds guaranteed chars to result
+  for ( var i = 0;i < finPass.length;i++) {
+    result[i] = finPass[i];
   }
 
+  //joins password together
   return result.join('');
 }
 
+//selects generate password button
 var generateBtn = document.querySelector
 ('#generate');
 
